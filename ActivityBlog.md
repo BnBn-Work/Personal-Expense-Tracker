@@ -36,3 +36,14 @@ Additionally, backend api functionality will need to be implemented. Key routes 
 - GET at /summary: Retrieves computed summary data for a user.
 
 All above tasks were asigned to myself, and completed promptly. A key note is that some core functionality was split into custom modules found inside the modules directory for cleaner code.
+
+### Development Entry 2: Database Integration
+
+Developing the database schema, and integrating the enviroment into the code is essential for future progress.
+After researching, the final choice for database enviroment to use is MySQL due to its reliability and position as an industry standard.
+
+Integrating the database encountered some initial issues, namely issues getting Node JS to properly authorize itself when connecting to the database, however usage of the commmand `ALTER USER 'root'@'localhost' IDENTIFIED WITH 'mysql_native_password' BY (root password as a string);` resolved that issue.
+
+Table creation & all other SQL statements used can be found in its seperate module under modules/databaseFunctions.js. To assure that the database is properly initalized, a series of connection checks are run as the server starts and the module exports a flag to idenitify when they are complete. Finally, the implementation of my query_sql was performed to allow for interaction with the database through Node JS's built in async tools allowing for a more streamlined integration.
+
+Milestone completion is currently expected to finish ontime by the end of Febuary 27th.
