@@ -16,7 +16,7 @@ loginForm.addEventListener("submit",(e)=>{
         break;
 
         default:
-        console.log("Unhandled Button input");
+            console.log("Unhandled Button input");
 
         break;
     }
