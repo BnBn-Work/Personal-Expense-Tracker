@@ -2,6 +2,7 @@ const express = require("express")
 const cors = require("cors");
 const mysql = require("mysql")
 
+const config = require("./config.json")
 const { sendErrorResponse, validateUsername, validatePassword } = require("./modules/validationFunctions");
 
 const PORT = 2000;
@@ -9,7 +10,7 @@ const app = express();
 const con = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "myDbP@ss"
+  password: config.databasePassword
 });
 
 let dbConnected = false;
@@ -24,7 +25,13 @@ con.connect(function(err) {
 app.use(cors());                    // Implements basic cross site security features
 app.use(express.json());            // Generates a JSON parsed body in the request object
 app.use(express.static("public"));  // Configures GET requests for all files in the folder ./public
-
+app.use("/", (req, res, next) => {
+    if(dbConnected) {        
+        next();
+    } else {
+        res.status(503).send({success: false, body: "Server is starting!"})
+    }
+});
 // - - - - - GET REQUESTS - - - - -
 
 // A route GET request should be redirected to our websites entry point
