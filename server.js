@@ -2,13 +2,14 @@
 
 const express = require("express")
 const cors = require("cors");
-const mysql = require("mysql")
+const mysql = require("mysql");
 const fs = require("fs")
 
 // - - - - - CUSTOM MODULES - - - - -
 
 var config; // defined later during runtime to allow for the case where this file doesn't exist.
 const { sendErrorResponse, validateUsername, validatePassword } = require("./modules/validationFunctions");
+const databaseFunctions = require("./modules/databaseFunctions");
 
 // - - - - - CONSTANTS - - - - -
 
@@ -18,7 +19,7 @@ const app = express();
 
 // - - - - - VARIABLES - - - - -
 
-let dbConnected = false;
+//let dbConnected = false;
 
 // - - - - - INIT - - - - - -
 
@@ -30,18 +31,16 @@ if(fs.existsSync("./config.json")){
     return;
 }
 
-const con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: config.databasePassword
-});
-
-con.connect(function(err) {
-  if (err) throw err;
-  dbConnected = true;
-  console.log("Connected!");
-});
-
+async function test(){
+    while(!databaseFunctions.dbConnected){
+    await new Promise((resolve) => {
+    setTimeout(resolve, 1000);
+  });
+    }
+    console.log("hi");
+    databaseFunctions.addUser();
+}
+test();
 
 // - - - - - MIDDLEWARE - - - - -
 
@@ -50,7 +49,7 @@ app.use(express.json());            // Generates a JSON parsed body in the reque
 app.use(express.static("public"));  // Configures GET requests for all files in the folder ./public
 
 app.use("/", (req, res, next) => {  // Prevents API usage while the server is still waiting for its database connection
-    if(dbConnected) {        
+    if(databaseFunctions.dbConnected) {        
         next();
     } else {
         res.status(503).send({success: false, body: "Server is starting!"})
