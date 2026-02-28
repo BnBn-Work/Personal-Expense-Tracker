@@ -56,7 +56,7 @@ con.connect(function(err) {
 
 
 function addUser(username, password){
-  let sql = "INSERT INTO Users (username, password) VALUES ('"+username+"', '"+password+"')";
+  let sql = "INSERT INTO Users (username, password) VALUES ('"+username+"', '"+password+"');";
   
   con.query(sql, (err, result) =>  {
       if (err) throw err;
@@ -65,7 +65,7 @@ function addUser(username, password){
 }
 
 function addStatement(userID, expenseType, date, value) {
-  let sql = "INSERT INTO Statment (userID, expenseType, date, value) VALUES ('"+userID+"', '"+expenseType+"', '"+date+"', '"+value+"')";
+  let sql = "INSERT INTO Statment (userID, expenseType, date, value) VALUES ('"+userID+"', '"+expenseType+"', '"+date+"', '"+value+"');";
      
   con.query(sql, (err, result) => {
       if (err) throw err;
@@ -73,6 +73,11 @@ function addStatement(userID, expenseType, date, value) {
   });
 }
 
+async function checkUsernameExists(username) {
+  let result = await sql_query("SELECT * FROM Users WHERE username = '"+username+"';");
+      
+  return result.length != 0;
+}
 function getAllUsers() {
   con.query("SELECT * FROM Users")
 }
@@ -81,5 +86,16 @@ function getAllStatements() {
 
 }
 
+async function sql_query(sql) {
+  let promise = new Promise((resolve) => {
+    con.query(sql, (err, result) => {
+      if (err) throw err;
+      resolve(result);
+    });
+  });
+
+  return promise;
+}
 module.exports.addUser = addUser;
 module.exports.addStatement = addStatement;
+module.exports.checkUsernameExists = checkUsernameExists;

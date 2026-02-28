@@ -17,6 +17,10 @@ function validateUsername(username,response) {
 
     if(validateRequestField(username,"string",response,"username")){
         if(alphaNumeric.test(username) && username.length <= 25){
+            //username can now be trusted for SQL queries
+
+            
+
             return true;
         } else {
             sendErrorResponse(response,"Username contains invalid characters");

@@ -31,17 +31,6 @@ if(fs.existsSync("./config.json")){
     return;
 }
 
-async function test(){
-    while(!databaseFunctions.dbConnected){
-    await new Promise((resolve) => {
-    setTimeout(resolve, 1000);
-  });
-    }
-    console.log("hi");
-    databaseFunctions.addUser();
-}
-test();
-
 // - - - - - MIDDLEWARE - - - - -
 
 app.use(cors());                    // Implements basic cross site security features
@@ -86,8 +75,15 @@ app.post("/login", (req, res)=>{
     }
 })
 
-app.post("/register", (req, res)=>{
-    
+app.post("/register", async (req, res)=>{
+    let username = req.body.username;
+    let password = req.body.password;
+
+    if(validateUsername(username,res) && validatePassword(password,res)){
+        if(!await databaseFunctions.checkUsernameExists(username)) {
+            databaseFunctions.addUser(username,password)
+        }
+    }
 })
 
 app.post("/newstatement", (req, res)=>{
