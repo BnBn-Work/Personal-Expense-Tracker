@@ -82,6 +82,9 @@ app.post("/register", async (req, res)=>{
     if(validateUsername(username,res) && validatePassword(password,res)){
         if(!await databaseFunctions.checkUsernameExists(username)) {
             databaseFunctions.addUser(username,password)
+            res.send({success: true});
+        } else {
+            sendErrorResponse(res,"Username already exists")
         }
     }
 })
