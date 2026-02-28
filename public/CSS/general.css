@@ -1,4 +1,38 @@
+:root {
+    --dark-teal: #19535fff;
+    --deep-ocean: #0b7a75ff;
+    --pale-oak: #d7c9aaff;
+    --dark-wine: #7b2d26ff;
+    --platinum: #f0f3f5ff;
+}
 
+body {
+    background-color: var(--platinum);
+}
+
+form {
+    background-color: var(--pale-oak);
+    padding: 1em 0.5em;
+    margin: 1em;
+    justify-content: center;
+    border-radius: 5px;
+    width: 75vw;
+}
+
+h3 {
+    text-align: center;
+    font-size: 2em;
+    font-family: 'Roboto', Arial, sans-serif;
+    background-color: var(--deep-ocean);
+    border-radius: 5px;
+    padding: 0.5em;
+    margin: 0.5em;
+    margin-top: 0em;
+}
+
+div {
+    margin: 0.5em;
+}
 .flex-horizontal {
     display: flex;
     flex-direction: row;
