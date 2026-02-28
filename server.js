@@ -1,19 +1,40 @@
+// - - - - - PACKAGES - - - - -
+
 const express = require("express")
 const cors = require("cors");
 const mysql = require("mysql")
+const fs = require("fs")
 
-const config = require("./config.json")
+// - - - - - CUSTOM MODULES - - - - -
+
+var config; // defined later during runtime to allow for the case where this file doesn't exist.
 const { sendErrorResponse, validateUsername, validatePassword } = require("./modules/validationFunctions");
+
+// - - - - - CONSTANTS - - - - -
 
 const PORT = 2000;
 const app = express();
+// note there is an additional constant; conn, that must be defined during the init section as config must be loaded.
+
+// - - - - - VARIABLES - - - - -
+
+let dbConnected = false;
+
+// - - - - - INIT - - - - - -
+
+if(fs.existsSync("./config.json")){
+    config = require("./config.json");
+} else {
+    console.log("./config.json does not exist. One has been generated for you, please fill it out before continuing");
+    fs.writeFileSync("./config.json",JSON.stringify({databasePassword:""}))
+    return;
+}
+
 const con = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: config.databasePassword
 });
-
-let dbConnected = false;
 
 con.connect(function(err) {
   if (err) throw err;
@@ -22,16 +43,20 @@ con.connect(function(err) {
 });
 
 
+// - - - - - MIDDLEWARE - - - - -
+
 app.use(cors());                    // Implements basic cross site security features
 app.use(express.json());            // Generates a JSON parsed body in the request object
 app.use(express.static("public"));  // Configures GET requests for all files in the folder ./public
-app.use("/", (req, res, next) => {
+
+app.use("/", (req, res, next) => {  // Prevents API usage while the server is still waiting for its database connection
     if(dbConnected) {        
         next();
     } else {
         res.status(503).send({success: false, body: "Server is starting!"})
     }
 });
+
 // - - - - - GET REQUESTS - - - - -
 
 // A route GET request should be redirected to our websites entry point
