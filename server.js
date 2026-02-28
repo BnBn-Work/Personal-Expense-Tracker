@@ -1,13 +1,24 @@
 const express = require("express")
-const cors = require("cors")
+const cors = require("cors");
+const mysql = require("mysql")
+
+const { sendErrorResponse, validateUsername, validatePassword } = require("./modules/validationFunctions");
 
 const PORT = 2000;
 const app = express();
-// POST /login - 
-// POST /register
-// GET /homepage
-// POST /newstatement
-// GET /summary
+const con = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "myDbP@ss"
+});
+
+let dbConnected = false;
+
+con.connect(function(err) {
+  if (err) throw err;
+  dbConnected = true;
+  console.log("Connected!");
+});
 
 
 app.use(cors());                    // Implements basic cross site security features
@@ -32,7 +43,16 @@ app.get("/summary",(req, res)=>{
 // - - - - - POST REQUESTS - - - - -
 
 app.post("/login", (req, res)=>{
-
+    // If field is missing, of wrong type, or invalid an error response is sent & false is returned
+    if(req.body != undefined) {
+        if(validateUsername(req.body.username) && validatePassword(req.body.password)){
+            let username = req.body.username;
+            let password = req.body.password;
+            console.log("Login post with username: ");
+        }
+    } else {
+        sendErrorResponse(res,"Missing Body or Content Headers");
+    }
 })
 
 app.post("/register", (req, res)=>{
@@ -40,6 +60,8 @@ app.post("/register", (req, res)=>{
 })
 
 app.post("/newstatement", (req, res)=>{
+    console.log(req);
     
 })
+
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

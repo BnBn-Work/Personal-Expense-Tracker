@@ -8,11 +8,11 @@ loginForm.addEventListener("submit",(e)=>{
     e.preventDefault();
     switch(e.submitter.id){
         case "signinButton":
-            window.location.href = "homepage.html" //make API request
+            window.location.href = "homepage.html"; //make API request
         break;
 
         case "registerButton":
-            window.location.href = "register.html"
+            window.location.href = "register.html";
         break;
 
         default:
@@ -20,4 +20,4 @@ loginForm.addEventListener("submit",(e)=>{
 
         break;
     }
-})
+});

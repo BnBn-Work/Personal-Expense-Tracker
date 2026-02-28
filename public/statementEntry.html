@@ -4,23 +4,29 @@
     <meta charset="utf-8">
     <title>Statement Entry</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="variables-palette-7.css" >   
-    <link rel="stylesheet" href="ch05-proj2.css" />
+    <link rel="stylesheet" href="CSS/general.css" >   
+    <link rel="stylesheet" href="CSS/statementEntry.css" />
     <script type="text/javascript" src="statementEntry.js" defer></script>
     </head>
     <body>
-        <form>
-            <h3>New Statement</h3>
-            <button>Income</button>
-            <button>Expense</button>
-            <label for="name">Name: </label>
-            <input type="text" id="name" name="name">
-            <label for="date">Date: </label>
-            <input type="date" id="date" name="date">
-            <label for="amount">Amount: </label>
-            <input type="number" id="amount" name="amount">
-            <button>Back</button>
-            <button>Confirm</button>
-        </form>
+        <div class="flex-vertical">
+            <div class="flex-horizontal">
+                <div class="bounding-box">
+                    <form id="statementForm">
+                        <h3>New Statement</h3>
+                        <button id="incomeButton">Income</button>
+                        <button id="expenseButton">Expense</button><br/>
+                        <label for="name">Name: </label>
+                        <input type="text" id="name" name="name"><br/>
+                        <label for="date">Date: </label>
+                        <input type="date" id="date" name="date"><br/>
+                        <label for="amount">Amount: </label>
+                        <input type="number" id="amount" name="amount"><br/>
+                        <button id="backButton">Back</button>
+                        <button id="confirmButton">Confirm</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
