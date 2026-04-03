@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <title>Homepage</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/CSS/general.css" >   
+    <link rel="stylesheet" href="/CSS/homepage.css" />
+    <script type="text/javascript" src="homepage.js" defer></script>
+    </head>
+
+    <body>
+        <div class="flex-vertical">
+            <div class="flex-horizontal">
+                <div class="main full-height">
+                    <div class="flex-stretch">
+                        <h1>Home</h1>
+                        <div>
+                            <button id="logoutButton">Logout</button>
+                            <button id="statementButton">New Statement</button>
+                            <button id="summarizeButton">Summarize</button>
+                        </div>
+                        <hr></hr>
+                        <div><p>Total Savings: </p><p id="totalSavings"></p></div>
+                        <div id="statements" class="scroll"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

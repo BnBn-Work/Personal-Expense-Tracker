@@ -80,6 +80,12 @@ async function checkUsernameExists(username) {
   return result.length != 0;
 }
 
+async function checkLogin(username, password) {
+  let result = await sql_query(`SELECT * FROM Users WHERE username = '${username}' AND password = '${password}';`);
+
+  return result.length != 0;
+}
+
 async function getIDFromUsername(username){
   let result = await sql_query("SELECT userID FROM Users WHERE username = '"+username+"';");
 
@@ -88,10 +94,15 @@ async function getIDFromUsername(username){
 
 async function getAllStatements(uID) {
   let result = await sql_query(`SELECT * FROM Statements WHERE userID = '${uID}';`);
-  console.log(result);
+
   return result;
 }
 
+async function getStatement(sID) {
+  let result = await sql_query(`SELECT * FROM Statements WHERE statementID = '${uID}';`);
+
+  return result[0];
+}
 async function updateStatement(uID) {
   //let result = await sql_query(`UPDATE * FROM Statements WHERE userID = '${uID}';`);
 }
@@ -111,3 +122,6 @@ module.exports.addStatement = addStatement;
 module.exports.checkUsernameExists = checkUsernameExists;
 module.exports.getAllStatements = getAllStatements;
 module.exports.getIDFromUsername = getIDFromUsername;
+module.exports.getStatement = getStatement;
+module.exports.updateStatement = updateStatement;
+module.exports.checkLogin = checkLogin;

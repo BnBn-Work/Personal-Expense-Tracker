@@ -1,6 +1,21 @@
-
+p {
+    width: fit-content;
+    display: inline-block;
+    padding: 0.5em;
+}
 
 .full-height {
     height: 90vh;
     margin: 0;
+}
+
+.just-left {
+    justify-content: left;
+    align-items: normal;
+}
+
+.flex-stretch {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
 }

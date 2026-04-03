@@ -12,7 +12,7 @@ body {
 }
 
 
-h3 {
+h1 {
     text-align: center;
     font-size: 2em;
     font-family: 'Roboto', Arial, sans-serif;
@@ -32,7 +32,7 @@ div {
     padding: 1em 0.5em;
     margin: 1em;
     justify-content: center;
-    border-radius: 5px;
+    border-radius: 10px;
     width: 75vw;
 }
 .flex-horizontal {
@@ -52,4 +52,9 @@ div {
     align-items: center;
     justify-content: center;
     height: 100vh;
+}
+
+.scroll {
+    overflow: scroll;
+    flex-grow: 1;
 }
