@@ -3,15 +3,17 @@ const incomeButton = document.getElementById("incomeButton");
 const backButton = document.getElementById("backButton");
 const confirmButton = document.getElementById("confirmButton");
 const statementForm = document.getElementById("statementForm");
+const statementTypeInput = document.getElementById("type");
 
 const EXPENSE = "expense";
 const INCOME = "income";
+var statementType;
 
 toggleExpenseType(EXPENSE);
 
 statementForm.addEventListener("submit",(e)=>{
     // To allow for proper handling, we do not want the page to refresh.
-    e.preventDefault();
+    let prevDef = true;
 
     switch(e.submitter.id){
         case "expenseButton":
@@ -27,18 +29,25 @@ statementForm.addEventListener("submit",(e)=>{
         break;
 
         case "confirmButton":
-            window.location.href = "homepage.html";
+            prevDef = false;
+
+            
         break;
 
         default:
             console.log("Unhandled Button input");
         break;
     }
+
+    if(prevDef){
+        e.preventDefault();
+    }
 })
 
 function toggleExpenseType(newType) {
     statementType = newType;
-
+    statementTypeInput.value = statementType;
+    
     switch(newType){
         case EXPENSE:
             expenseButton.disabled = true;

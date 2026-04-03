@@ -14,7 +14,8 @@ const STATMENT_TABLE_CREATE = `CREATE TABLE IF NOT EXISTS Statements (
 	userID int NOT NULL,
 	expenseType varchar(25) NOT NULL,
 	date date NOT NULL,
-	value float NOT NULL,
+  name varchar(25) NOT NULL,
+	value int NOT NULL,
 	PRIMARY KEY (statementID),
 	FOREIGN KEY (userID) REFERENCES Users (userID)
 );`
@@ -64,8 +65,8 @@ function addUser(username, password){
   });
 }
 
-function addStatement(userID, expenseType, date, value) {
-  let sql = "INSERT INTO Statment (userID, expenseType, date, value) VALUES ('"+userID+"', '"+expenseType+"', '"+date+"', '"+value+"');";
+function addStatement(userID, expenseType, name, date, value) {
+  let sql = `INSERT INTO Statements (userID, expenseType, name, date, value) VALUES ('${userID}', '${expenseType}', '${name}', '${date}', '${value}');`;
      
   con.query(sql, (err, result) => {
       if (err) throw err;
@@ -75,12 +76,14 @@ function addStatement(userID, expenseType, date, value) {
 
 async function checkUsernameExists(username) {
   let result = await sql_query("SELECT * FROM Users WHERE username = '"+username+"';");
-      
+
   return result.length != 0;
 }
 
 async function getIDFromUsername(username){
+  let result = await sql_query("SELECT userID FROM Users WHERE username = '"+username+"';");
 
+  return result[0].userID;
 }
 
 async function getAllStatements(uID) {
@@ -106,3 +109,5 @@ async function sql_query(sql) {
 module.exports.addUser = addUser;
 module.exports.addStatement = addStatement;
 module.exports.checkUsernameExists = checkUsernameExists;
+module.exports.getAllStatements = getAllStatements;
+module.exports.getIDFromUsername = getIDFromUsername;

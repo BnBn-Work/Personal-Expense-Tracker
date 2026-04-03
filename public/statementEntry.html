@@ -12,11 +12,12 @@
         <div class="flex-vertical">
             <div class="flex-horizontal">
                 <div class="main">
-                    <form id="statementForm">
+                    <form id="statementForm" method=post action="newstatement">
                         <h3>New Statement</h3>
                         <div>
                             <button id="incomeButton">Income</button>
                             <button id="expenseButton">Expense</button>
+                            <input type="hidden" name="type" id="type" />
                         </div>
                         <div>
                             <label for="name">Name: </label>

@@ -1,3 +1,5 @@
+const REGEX_CHECK_ONLY_DIGITS = /^\d+$/;
+
 function sendErrorResponse(response, message){
     response.status(400);
     response.send({success: false, code: 0, body: message})
@@ -48,19 +50,71 @@ function validateNumberRange(value, response, valueName, minInclusive, maxExclus
             if(value < maxExclusive){
                 return true;
             } else {
-                sendErrorResponse(response, valueName+" must be < "+max)
+                sendErrorResponse(response, valueName+" must be < "+max);
             }
         } else {
-            sendErrorResponse(response, valueName+" must be >= "+min)
+            sendErrorResponse(response, valueName+" must be >= "+min);
         }
     }
 
     return false;
 }
 
+function validateHTMLDate(value, response){
+    if(validateRequestField(value, "string", response, "date")){
+        if(value.length === 10 && value[4] === "-" && value[7] === "-"){
+            let valMod = value.replaceAll("-","");
+            if(REGEX_CHECK_ONLY_DIGITS.test(valMod)) {
+                return true;
+            }
+        } else {
+            sendErrorResponse(response, "date formatted poorly");
+        }
+    }
+
+    return false;
+}
+
+function validateStatementName(value, response){
+    if(validateRequestField(value, "string", response, "name")){
+        if(value.length <= 25 && value.length >= 1){
+            return true;
+        } else {
+            sendErrorResponse(response, "name is of invalid length");
+        }
+    }
+
+    return false;
+}
+
+function validateStatementAmount(value, response){
+    if(validateRequestField(value, "number", response, "amount")){
+        if(value > 0 && value <= 1000000000) {
+            return true;
+        } else {
+            sendErrorResponse(response, "amount must be aabove 0 no more than 1 billion");
+        }
+    }
+    return false;
+}
+
+function validateStatementType(value, response){
+    if(validateRequestField(value, "string", response, "type")){
+        if(value === "expense" || value === "income"){
+            return true;
+        } else {
+            sendErrorResponse(response, "value is of invalid type");
+        }
+    }
+    return false;
+}
 
 module.exports.sendErrorResponse = sendErrorResponse;
 module.exports.validateRequestField = validateRequestField;
 module.exports.validateUsername = validateUsername;
 module.exports.validatePassword = validatePassword;
 module.exports.validateNumberRange = validateNumberRange;
+module.exports.validateHTMLDate = validateHTMLDate;
+module.exports.validateStatementAmount = validateStatementAmount;
+module.exports.validateStatementName = validateStatementName;
+module.exports.validateStatementType = validateStatementType;
