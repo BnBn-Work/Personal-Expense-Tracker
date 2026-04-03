@@ -78,12 +78,19 @@ async function checkUsernameExists(username) {
       
   return result.length != 0;
 }
-function getAllUsers() {
-  con.query("SELECT * FROM Users")
+
+async function getIDFromUsername(username){
+
 }
 
-function getAllStatements() {
+async function getAllStatements(uID) {
+  let result = await sql_query(`SELECT * FROM Statements WHERE userID = '${uID}';`);
+  console.log(result);
+  return result;
+}
 
+async function updateStatement(uID) {
+  //let result = await sql_query(`UPDATE * FROM Statements WHERE userID = '${uID}';`);
 }
 
 async function sql_query(sql) {

@@ -65,7 +65,7 @@ app.get("/summary",(req, res)=>{
 app.post("/login", (req, res)=>{
     // If field is missing, of wrong type, or invalid an error response is sent & false is returned
     if(req.body != undefined) {
-        if(validateUsername(req.body.username) && validatePassword(req.body.password)){
+        if(validateUsername(req.body.username) && validatePassword(req.body.password)){ // fail responses are sent in the validation functions.
             let username = req.body.username;
             let password = req.body.password;
             console.log("Login post with username: ");
@@ -79,7 +79,7 @@ app.post("/register", async (req, res)=>{
     let username = req.body.username;
     let password = req.body.password;
 
-    if(validateUsername(username,res) && validatePassword(password,res)){
+    if(validateUsername(username,res) && validatePassword(password,res)){ // fail responses are sent in the validation functions.
         if(!await databaseFunctions.checkUsernameExists(username)) {
             databaseFunctions.addUser(username,password)
             res.send({success: true});
