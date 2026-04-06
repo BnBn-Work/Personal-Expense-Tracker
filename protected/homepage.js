@@ -36,7 +36,7 @@ fetch(window.location.origin+"/protected/statements", {
 
                     total += statement.expenseType === "expense" ? statement.value * -1 : statement.value; 
                     statement.value *= 0.01;
-                    
+
                     nE.innerHTML = `<h3>${statement.name}</h3><label>${statement.expenseType}</label><p>${statement.date}</p><p>${statement.value}</p><hr/>`;
                     nE.dataset.date = statement.date;
 
@@ -59,6 +59,7 @@ fetch(window.location.origin+"/protected/statements", {
                 total = total * 0.01;
 
                 totalSavings.innerText = total < 0 ? `-$${total*-1}` : `$${total}`;
+                totalSavings.innerHTML = `<b>${totalSavings.innerHTML}</b>`;
             });
 
 //prof wants us to use plotly.js

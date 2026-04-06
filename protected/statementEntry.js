@@ -4,6 +4,7 @@ const backButton = document.getElementById("backButton");
 const confirmButton = document.getElementById("confirmButton");
 const statementForm = document.getElementById("statementForm");
 const statementTypeInput = document.getElementById("type");
+const amountInput = document.getElementById("amount");
 
 const EXPENSE = "expense";
 const INCOME = "income";
@@ -44,6 +45,10 @@ statementForm.addEventListener("submit",(e)=>{
     }
 })
 
+amountInput.addEventListener("change",e=>{
+    //assure correct input data
+    console.log(typeof e.target.value);
+})
 function toggleExpenseType(newType) {
     statementType = newType;
     statementTypeInput.value = statementType;

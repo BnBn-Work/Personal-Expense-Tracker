@@ -146,14 +146,17 @@ app.post("/register", async (req, res)=>{
     }
 })
 
-app.post("/newstatement", (req, res)=>{
+app.post("/protected/newstatement", (req, res)=>{
     console.log(req.body);
     let uID = 3;
     let type = req.body.type;
     let name = req.body.name;
     let date = req.body.date;
     let amount = parseInt(req.body.amount); // if undefined this becomes NaN which fails at the validation stage
-
+    if(!isNaN(amount)){
+        amount *= 100; //stored in cents as float representation in mysql is inconsistent;
+        amount = Math.floor(amount);
+    }
     if(validateStatementName(name,res) && validateStatementType(type,res) && validateStatementAmount(amount,res) && validateHTMLDate(date,res)){
         databaseFunctions.addStatement(uID,type,name,date,amount);
         res.redirect("homepage.html");
